@@ -1,0 +1,18 @@
+.footer{
+    height: 100%;
+    padding: 36px 24px;
+    display: block;
+}
+.menu{
+    display: flex;
+    font-size: large;
+}
+.option{
+    text-decoration: none;
+    color: black;
+    margin: 36px 12px;
+}
+.copyright{
+    padding: 24px 12px;
+    color:gray;
+}

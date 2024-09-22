@@ -1,0 +1,36 @@
+{
+  "logo": "https://res.cloudinary.com/dxk7brqop/image/upload/v1726350783/logo_wezhcx.png",
+  "home_profiles": [
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349999/samples/coffee.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349998/samples/balloons.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/ecommerce/accessories-bag.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349991/samples/people/kitchen-bar.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349991/samples/people/smiling-man.jpg"
+  ],
+  "portfolio_pictures": [
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/people/bicycle.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349999/samples/coffee.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349999/samples/chair-and-coffee-table.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349998/samples/balloons.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349997/samples/shoe.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/ecommerce/accessories-bag.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/landscapes/beach-boat.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/ecommerce/car-interior-design.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/animals/three-dogs.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/landscapes/architecture-signs.jpg"
+  ],
+  "portfolio_main": "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349997/samples/shoe.jpg",
+  "studio1": [
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/food/spices.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/imagecon-group.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349991/samples/bike.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349991/samples/sheep.jpg"
+  ],
+  "studio2": [
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/landscapes/beach-boat.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349991/samples/sheep.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/ecommerce/car-interior-design.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/animals/three-dogs.jpg",
+    "https://res.cloudinary.com/dxk7brqop/image/upload/v1726349992/samples/landscapes/architecture-signs.jpg"
+  ]
+}

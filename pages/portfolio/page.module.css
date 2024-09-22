@@ -1,0 +1,23 @@
+.vertical-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid with 300px minimum width */
+  grid-gap: 24px; /* Spacing between items */
+}
+
+.vertical-grid--photo-size_medium img {
+  width: 100%; /* Make the image take the full width of the container */
+  max-width: 100%; /* Prevent the image from exceeding container's width */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure image covers the container without stretching */
+}
+
+.vertical-grid--photo-spacing_more-spacing {
+  padding: 16px; /* Spacing around the grid items */
+}
+
+/* Add constraints for image size */
+.vertical-grid img {
+  max-width: 100%; /* Ensure image doesn't exceed container size */
+  max-height: 500px; /* Constrain the image's height */
+  object-fit: cover; /* Ensures the image covers the container without distortion */
+}
