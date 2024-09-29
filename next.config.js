@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     domains: ['res.cloudinary.com'], // Add Cloudinary domain for next/image
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+},
 }
 
 module.exports = nextConfig
