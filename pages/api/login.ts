@@ -33,7 +33,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     // Set the token in a cookie
     res.setHeader(
       "Set-Cookie",
-      serialize("token", anonymousToken, {
+      serialize("token_anony", anonymousToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV !== "development",
         maxAge: 60 * 60 * 5, // 5 hours expiration for anonymous session
