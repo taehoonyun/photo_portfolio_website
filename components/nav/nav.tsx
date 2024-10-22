@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 
 import photos from "../../public/photos.json";
-// import LogoutButton from "../logout/LogoutButton";
+import LogoutButton from "../logout/LogoutButton";
 export default function Nav() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false); // Handles both mobile menu and dropdown
@@ -133,8 +133,7 @@ export default function Nav() {
               LOGIN
             </Link>
           ) : (
-            <></>
-            // <LogoutButton />
+            <LogoutButton />
           )}
         </div>
       </div>
