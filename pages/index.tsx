@@ -37,12 +37,12 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     return {
       props: { user: undefined }, // An empty object as props
     };
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
+    // return {
+    //   redirect: {
+    //     destination: "/login",
+    //     permanent: false,
+    //   },
+    // };
   }
 
   try {
@@ -54,11 +54,11 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   } catch (error) {
     console.log(error);
     
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
+    // return {
+    //   redirect: {
+    //     destination: "/login",
+    //     permanent: false,
+    //   },
+    // };
   }
 }
