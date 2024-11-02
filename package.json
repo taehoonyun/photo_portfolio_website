@@ -48,6 +48,7 @@
 		"typescript": "5.0.4"
 	},
 	"devDependencies": {
+		"@types/js-cookie": "^3.0.6",
 		"@types/jsonwebtoken": "^9.0.7",
 		"@types/nodemailer": "^6.4.15"
 	}
