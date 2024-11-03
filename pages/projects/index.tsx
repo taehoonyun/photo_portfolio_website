@@ -1,13 +1,28 @@
 import DefaultLayout from "@/layouts/default";
-import photos from "../../public/photos.json";
 import Image from "next/image";
 import Link from "next/link";
+import { fetchImagesFromFolder } from "@/components/getPicture/getPicture";
+import { useState, useEffect } from "react";
+
+const PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
 
 export default function DocsPage() {
   const preventCopy = (e: any) => {
     e.preventDefault();
   };
+  const [profile1, setProfile1] = useState<string[]>([]);
+  const [profile2, setProfile2] = useState<string[]>([]);
+  useEffect(() => {
+    loadProfiles();
+  }, []);
 
+  const loadProfiles = async () => {
+    const fetchedProfile1 = await fetchImagesFromFolder("Dev/Dev_Studio1", 1);
+    setProfile1(fetchedProfile1.pictures || []);
+
+    const fetchedProfile2 = await fetchImagesFromFolder("Dev/Dev_Studio2", 1);
+    setProfile2(fetchedProfile2.pictures || []);
+  };
   return (
     <DefaultLayout>
       <section>
@@ -17,7 +32,7 @@ export default function DocsPage() {
             {/* Image Container */}
             <div className="relative">
               <Image
-                src={photos.studio1[0]}
+                src={profile1[0]}
                 alt="Studio1 Background"
                 width={1000}
                 height={1000}
@@ -40,7 +55,7 @@ export default function DocsPage() {
             {/* Image Container */}
             <div className="relative">
               <Image
-                src={photos.studio2[1]}
+                src={profile2[0]}
                 alt="Studio2 Background"
                 width={1000}
                 height={1000}

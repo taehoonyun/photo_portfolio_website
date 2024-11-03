@@ -3,26 +3,40 @@ import styles from "./profile.module.css";
 import { useState, useRef, useEffect, useCallback } from "react";
 import "react-slideshow-image/dist/styles.css";
 import NoCopyImage from "../../components/NoCopyImage/NoCopyImage";
-import photos from "../../public/photos.json";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/effect-coverflow";
 import { Pagination, Navigation, Autoplay } from "swiper/modules"; // Import from swiper/modules
+import "react-toastify/dist/ReactToastify.css";
+import UploadComponent from "../upload/upload";
+import { useProfile } from "@/lib/useProfile";
+
+const PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
+
 export default function Profile() {
   const slider = useRef<any>(null);
   const [index, setIndex] = useState<number>(0);
   const [click, setClick] = useState<boolean>(true);
   const timeoutRef = useRef<any>(null);
   const delay = 5000;
-  const profile_pic = photos.home_profiles;
+  const { isLoggedIn, profilePic, handleUploadSuccess } = useProfile("Dev/Dev_Home", 10);
 
   return (
     <div className={styles.trending}>
       <div className={styles.scontainer}>
-        <div>
-        <Swiper
+        <div className="relative ">
+          {isLoggedIn && PRESET && (
+            <UploadComponent
+              className="absolute top-0 right-0 z-10 bg-slate-300 p-2 rounded-md hover:bg-slate-400" // Position the upload button
+              signatureEndpoint="/api/siginCloudinary"
+              uploadPreset={PRESET}
+              options={{ folder: "Dev/Dev_Home" }}
+              onUploadSuccess={handleUploadSuccess} // Pass callback here
+            />
+          )}
+          <Swiper
             autoplay={{
               delay: 5000, // Delay between slides
               disableOnInteraction: false,
@@ -35,7 +49,7 @@ export default function Profile() {
             slidesPerView={1.5} // Show part of the next slide
             spaceBetween={10} // Space between slides
           >
-            {profile_pic.map((pic, index) => (
+            {profilePic?.map((pic, index) => (
               <SwiperSlide key={index}>
                 <div className="flex justify-center w-full h-[300px] sm:h-[450px] md:h-[600px] lg:h-[840px]">
                   <NoCopyImage

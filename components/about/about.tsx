@@ -6,39 +6,13 @@ import { fetchImagesFromFolder } from "../getPicture/getPicture";
 import { ToastContainer, toast } from "react-toastify";
 import { CldImage } from "next-cloudinary";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useProfile } from "@/lib/useProfile";
 const PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
 
 export default function About() {
   const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [profilePic, setProfilePic] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsLoggedIn(!!localStorage.getItem("user"));
-    }
-    loadProfilePicture();
-  }, []);
-
-  const loadProfilePicture = async () => {
-    try {
-      const fetchedImages = await fetchImagesFromFolder("Dev/Dev_Profile", 1);
-      if (fetchedImages.pictures?.length > 0) {
-        setProfilePic(fetchedImages.pictures[0].url);
-      }
-    } catch (error) {
-      console.error("Failed to load profile image:", error);
-      toast.error("Failed to load profile picture.");
-    }
-  };
-
-  // Update profile picture and show success toast
-  const handleUploadSuccess = (newImageUrl: string) => {
-    setProfilePic(newImageUrl); // Update profile picture
-    toast.success("Profile picture updated successfully!"); // Show success toast
-  };
-
+  const { isLoggedIn, profilePic, handleUploadSuccess } = useProfile("Dev/Dev_Profile", 1);
+    
   const preventCopy = useCallback((e: React.SyntheticEvent) => {
     e.preventDefault();
   }, []);
@@ -56,7 +30,7 @@ export default function About() {
             <CldImage
               className="cursor-pointer"
               crop={"fill"}
-              src={profilePic}
+              src={profilePic[0]}
               alt="Profile Picture"
               width={650} // Define a base width to ensure aspect ratio is calculated
               height={700} // Setting height to 0 lets Next.js calculate the height based on width

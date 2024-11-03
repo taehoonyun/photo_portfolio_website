@@ -109,7 +109,7 @@ export default function Nav() {
             <Link className={`${linkClasses} cursor-pointer`} href="/projects">
               PROJECTS
             </Link>
-            <div className="absolute hidden group-hover:block bg-white shadow-lg mt-2">
+            <div className="absolute hidden group-hover:block bg-white shadow-lg mt-1">
               <Link
                 className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                 href="/projects/studio1"
