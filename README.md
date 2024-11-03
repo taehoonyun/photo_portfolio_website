@@ -31,3 +31,10 @@ PERSONAL_EMAIL = "receiving email"
 ![Alt text](https://res.cloudinary.com/dxk7brqop/image/upload/v1726944926/Screenshot_2024-09-21_at_2.54.08_PM_b18vpi.png)
 
 ![Alt text](https://res.cloudinary.com/dxk7brqop/image/upload/v1726945176/Image_9-21-24_at_2.53_PM_vyci2u.jpg)
+
+
+## Set up Cloudinary
+
+get start: https://cloudinary.com/documentation/node_quickstart
+
+preset: https://cloudinary.com/documentation/upload_presets
