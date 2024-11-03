@@ -2,7 +2,7 @@
 import styles from "./profile.module.css";
 import { useState, useRef, useEffect, useCallback } from "react";
 import "react-slideshow-image/dist/styles.css";
-import NoCopyImage from "../../../components/NoCopyImage/NoCopyImage";
+import NoCopyImage from "../../../components/NoCopyImage_Studio/NoCopyImageStudio";
 import photos from "../../../public/photos.json";
 import { Swiper, SwiperSlide } from "swiper/react";
 import DefaultLayout from "@/layouts/default";
@@ -42,20 +42,10 @@ export default function Studio2() {
                   <SwiperSlide key={index}>
                       <div className="flex justify-center w-full h-[300px] sm:h-[450px] md:h-[600px] lg:h-[840px]">
                       <NoCopyImage
-                        className=""
-                        src={pic}
                         alt="Picture of the author"
-                        style={{
-                          userSelect: "none",
-                          width: "auto",
-                          height: "100%",
-                          maxHeight: "840px",
-                        }}
-                        width={1200}
-                        sizes=""
-                        height={450} // Set your desired height
                         priority={true}
-                      ></NoCopyImage>
+                        src={pic}
+                      />
                     </div>
                   </SwiperSlide>
                 ))}

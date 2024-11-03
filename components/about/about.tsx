@@ -1,71 +1,102 @@
 import Image from "next/image";
-import photos from "../../public/photos.json";
-import UploadComponent from "../upload/upload";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import UploadComponent from "../upload/upload";
+import { fetchImagesFromFolder } from "../getPicture/getPicture";
+import { ToastContainer, toast } from "react-toastify";
+import { CldImage } from "next-cloudinary";
+import "react-toastify/dist/ReactToastify.css";
+
+const PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
 
 export default function About() {
-  const preventCopy = (e: any) => {
-    e.preventDefault();
-  };
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [profilePic, setProfilePic] = useState<string | null>(null);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("user");
-      if (token) {
-        setIsLoggedIn(true);
-      }
+      setIsLoggedIn(!!localStorage.getItem("user"));
     }
+    loadProfilePicture();
   }, []);
 
-  const navigateToPortfolio = () => {
-    router.push("/portfolio"); // Navigate to the /about page
+  const loadProfilePicture = async () => {
+    try {
+      const fetchedImages = await fetchImagesFromFolder("Dev/Dev_Profile", 1);
+      if (fetchedImages.pictures?.length > 0) {
+        setProfilePic(fetchedImages.pictures[0].url);
+      }
+    } catch (error) {
+      console.error("Failed to load profile image:", error);
+      toast.error("Failed to load profile picture.");
+    }
   };
+
+  // Update profile picture and show success toast
+  const handleUploadSuccess = (newImageUrl: string) => {
+    setProfilePic(newImageUrl); // Update profile picture
+    toast.success("Profile picture updated successfully!"); // Show success toast
+  };
+
+  const preventCopy = useCallback((e: React.SyntheticEvent) => {
+    e.preventDefault();
+  }, []);
+
+  const navigateToPortfolio = useCallback(() => {
+    router.push("/portfolio");
+  }, [router]);
+
   return (
     <div className="flex flex-col md:flex-row mt-10 mb-10 md:mt-60 md:mb-48">
-      <div className="flex flex-col md:p-20 basis-1/2 m-10 md:m-12">
-        <span className="text-lg font-bold mb-4 text-[32px] md:text-2xl">
-          ABOUT
-        </span>
-        <span className="leading-8 md:leading-10 text-xl md:text-xl text-justify">
-          asd tyughj is a rtyfh photographer uisqsz pn utyhyuo, jhklqmz to hgfh
-          the hgfh and zxczxs of ffaaasdwas qweqq erg gerge. fghfgh by the
-          fqwxghte of optnvyq, nature, and eeeff dfgdreer, her qjcmxcv wek
-          isdieo mcvbkld mdflm zq, kdmb. wieur, sdkjwiq, skdflz qiojds,fm
-          relktler mer; kerljeorikmd mle le lsk eo azoeirjmn xsqa work qggh to
-          fghfg usaqvl wqe mfjfjq fine asdas iotosqnz1.
-        </span>
-      </div>
+      <AboutText />
       <div className="basis-1/2 flex justify-center mt-8 md:mt-0">
-        {isLoggedIn && (
-          <UploadComponent
-            className=""
-            signatureEndpoint="/api/siginCloudinary"
-            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME}
-            options={{ folder: "Dev/Dev_Profile" }}
-          />
-        )}
-        <Image
-          className="cursor-pointer"
-          src={photos.portfolio_main}
-          alt="Picture of the author"
-          width={650}
-          height={500}
-          quality={100}
-          sizes="100vw"
-          style={{
-            width: "75%",
-            height: "auto",
-            minWidth: "300px",
-            minHeight: "200px",
-          }}
-          onClick={navigateToPortfolio}
-          onContextMenu={preventCopy} // Prevent right-click
-          onDragStart={preventCopy} // Prevent drag
-          priority
-        />
+        <div className="relative w-full max-w-[650px] flex justify-center">
+          {profilePic && (
+            <CldImage
+              className="cursor-pointer"
+              crop={"fill"}
+              src={profilePic}
+              alt="Profile Picture"
+              width={650} // Define a base width to ensure aspect ratio is calculated
+              height={700} // Setting height to 0 lets Next.js calculate the height based on width
+              quality={100}
+              onContextMenu={preventCopy} // Prevent right-click
+              onDragStart={preventCopy} // Prevent drag
+              onClick={navigateToPortfolio}
+            />
+          )}
+          {isLoggedIn && PRESET && (
+            <UploadComponent
+              className="absolute top-[-50px] right-0 z-10 bg-slate-300 p-2 rounded-md hover:bg-slate-400" // Position the upload button
+              signatureEndpoint="/api/siginCloudinary"
+              uploadPreset={PRESET}
+              options={{ folder: "Dev/Dev_Profile" }}
+              onUploadSuccess={handleUploadSuccess} // Pass callback here
+            />
+          )}
+        </div>
       </div>
+
+      {/* Toast container to display notifications */}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </div>
   );
 }
+
+// Separate component for the About text section
+const AboutText = () => (
+  <div className="flex flex-col md:p-20 basis-1/2 m-10 md:m-12">
+    <span className="text-lg font-bold mb-4 text-[32px] md:text-2xl">
+      ABOUT
+    </span>
+    <span className="leading-8 md:leading-10 text-xl md:text-xl text-justify">
+      asd tyughj is a rtyfh photographer uisqsz pn utyhyuo, jhklqmz to hgfh the
+      hgfh and zxczxs of ffaaasdwas qweqq erg gerge. fghfgh by the fqwxghte of
+      optnvyq, nature, and eeeff dfgdreer, her qjcmxcv wek isdieo mcvbkld mdflm
+      zq, kdmb. wieur, sdkjwiq, skdflz qiojds,fm relktler mer; kerljeorikmd mle
+      le lsk eo azoeirjmn xsqa work qggh to fghfg usaqvl wqe mfjfjq fine asdas
+      iotosqnz1.
+    </span>
+  </div>
+);

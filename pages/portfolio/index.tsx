@@ -1,20 +1,17 @@
 import Image from "next/image";
-import styles from "./page.module.css";
-import DefaultLayout from "@/layouts/default";
 import { useRouter } from "next/router";
 import {
   Modal,
   ModalContent,
-  ModalHeader,
   ModalBody,
-  ModalFooter,
-  Button,
   useDisclosure,
 } from "@nextui-org/react";
-import { document } from "postcss";
 import { useState } from "react";
+
 import NoCopyImage from "../../components/NoCopyImage/NoCopyImage";
 import photos from "../../public/photos.json";
+
+import DefaultLayout from "@/layouts/default";
 export default function Page() {
   const profile_pic = photos.portfolio_pictures;
   // pages/index.js
@@ -22,15 +19,16 @@ export default function Page() {
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedPicture, setSelectedPicture] = useState("");
+
   return (
     <DefaultLayout>
       <section>
         <Modal
-          isOpen={isOpen}
-          onOpenChange={onOpenChange}
-          size={"5xl"}
           backdrop={"blur"}
+          isOpen={isOpen}
           placement={"center"}
+          size={"5xl"}
+          onOpenChange={onOpenChange}
         >
           <ModalContent>
             {(onClose) => (
@@ -38,14 +36,11 @@ export default function Page() {
                 <ModalBody>
                   <div className="flex justify-center h-full items-center ">
                     <NoCopyImage
-                      className={styles.zoom_image}
-                      src={selectedPicture || ""}
                       alt="photo"
-                      width={900}
                       height={300}
-                      sizes=""
-                      style={{ userSelect: "none" }}
                       priority={false}
+                      src={selectedPicture || ""}
+                      width={900}
                     />
                   </div>
                 </ModalBody>
@@ -57,13 +52,13 @@ export default function Page() {
           {/* Background Image */}
           <div className="absolute inset-0">
             <Image
-              src={photos.portfolio_main} // Replace with your image
+              priority
               alt="Portfolio Background"
               layout="fill"
               objectFit="cover"
               objectPosition="center"
               quality={100}
-              priority
+              src={photos.portfolio_main} // Replace with your image
             />
           </div>
 
@@ -79,27 +74,25 @@ export default function Page() {
             {profile_pic.map((pic, index) => {
               if ((index + 0) % 3 === 0) {
                 return (
-                  <div
+                  <button
                     key={index}
                     className="mt-8 m-auto w-[31.1vw] cursor-pointer"
-                    onClick={(e) => {
+                    onClick={() => {
                       onOpen();
                       setSelectedPicture(pic);
                     }}
                   >
                     <NoCopyImage
-                      className=""
-                      sizes=""
-                      style={{ userSelect: "none"}}
-                      src={pic}
                       alt="Picture of the author"
-                      width={650}
                       height={450}
                       priority={false}
-                    ></NoCopyImage>
-                  </div>
+                      src={pic}
+                      width={650}
+                    />
+                  </button>
                 );
               }
+
               return null; // Return null for other indexes
             })}
           </div>
@@ -107,27 +100,25 @@ export default function Page() {
             {profile_pic.map((pic, index) => {
               if ((index + 1) % 3 === 0) {
                 return (
-                  <div
+                  <button
                     key={index}
                     className="mt-8 m-auto w-[31.1vw] cursor-pointer"
-                    onClick={(e) => {
+                    onClick={() => {
                       onOpen();
                       setSelectedPicture(pic);
                     }}
                   >
                     <NoCopyImage
-                      className=""
-                      src={pic}
-                      sizes=""
-                      style={{ userSelect: "none"}}
                       alt="Picture of the author"
-                      width={650}
                       height={450}
                       priority={false}
-                    ></NoCopyImage>
-                  </div>
+                      src={pic}
+                      width={650}
+                    />
+                  </button>
                 );
               }
+
               return null; // Return null for other indexes
             })}
           </div>
@@ -135,27 +126,25 @@ export default function Page() {
             {profile_pic.map((pic, index) => {
               if ((index + 2) % 3 === 0) {
                 return (
-                  <div
+                  <button
                     key={index}
                     className="mt-8 m-auto w-[31.1vw] cursor-pointer"
-                    onClick={(e) => {
+                    onClick={() => {
                       onOpen();
                       setSelectedPicture(pic);
                     }}
                   >
                     <NoCopyImage
-                      className=""
-                      sizes=""
-                      src={pic}
-                      style={{ userSelect: "none"}}
                       alt="Picture of the author"
-                      width={650}
                       height={450}
                       priority={false}
-                    ></NoCopyImage>
-                  </div>
+                      src={pic}
+                      width={650}
+                    />
+                  </button>
                 );
               }
+
               return null; // Return null for other indexes
             })}
           </div>

@@ -22,37 +22,29 @@ export default function Profile() {
     <div className={styles.trending}>
       <div className={styles.scontainer}>
         <div>
-          <Swiper
-            slidesPerView={1.5} // Show part of the next slide
-            spaceBetween={10} // Space between slides
-            centeredSlides={true} // Keep the current slide centered
+        <Swiper
             autoplay={{
               delay: 5000, // Delay between slides
               disableOnInteraction: false,
             }}
+            centeredSlides={true} // Keep the current slide centered
             loop={true} // Loop the slideshow
-            pagination={{ clickable: true }}
-            navigation={true} // Show navigation buttons
             modules={[Pagination, Navigation, Autoplay]} // Use the imported modules
+            navigation={true} // Show navigation buttons
+            pagination={{ clickable: true }}
+            slidesPerView={1.5} // Show part of the next slide
+            spaceBetween={10} // Space between slides
           >
             {profile_pic.map((pic, index) => (
               <SwiperSlide key={index}>
                 <div className="flex justify-center w-full h-[300px] sm:h-[450px] md:h-[600px] lg:h-[840px]">
                   <NoCopyImage
-                    className=""
-                    src={pic}
-                    style={{
-                      userSelect: "none",
-                      width: "100%",
-                      height: "auto",
-                      maxHeight: "840px",
-                    }}
                     alt="Picture of the author"
-                    width={1200}
                     height={800}
-                    sizes="" // Define responsive breakpoints
                     priority={true}
-                  ></NoCopyImage>
+                    src={pic}
+                    width={1200}
+                  />
                 </div>
               </SwiperSlide>
             ))}
