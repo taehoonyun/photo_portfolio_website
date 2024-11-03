@@ -1,7 +1,11 @@
 import { useRouter } from "next/router";
-import { Button } from "@nextui-org/react"; // Ensure correct import from NextUI
+import { Button } from "@nextui-org/react";
 
-const LogoutButton = () => {
+interface LogoutButtonProps {
+  title: string;
+}
+
+const LogoutButton = ({ title }: LogoutButtonProps) => {
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -14,11 +18,11 @@ const LogoutButton = () => {
       });
 
       if (response.ok) {
-        // If logout is successful, redirect to the login page
-        router.push("/login");
+        // Clear local storage and redirect to the login page if logout is successful
         if (typeof window !== "undefined") {
-          const token = localStorage.removeItem("user");
+          localStorage.clear();
         }
+        router.push("/login");
       } else {
         console.error("Logout failed");
       }
@@ -32,9 +36,9 @@ const LogoutButton = () => {
       className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
       onClick={handleLogout}
     >
-      Logout
+      {title}
     </Button>
   );
 };
 
-export default LogoutButton; // Ensure the component is correctly exported
+export default LogoutButton;

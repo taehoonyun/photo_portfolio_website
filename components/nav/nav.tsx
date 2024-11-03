@@ -28,7 +28,7 @@ export default function Nav() {
   const mobileLinkClasses = "text-3xl text-gray-800 hover:bg-gray-500";
 
   return (
-    <nav className="w-full bg-white shadow-md z-10">
+    <nav className="w-full bg-white shadow-md z-1">
       <div className="w-full flex justify-between items-center p-4">
         {/* Logo */}
         <div className="flex items-center">
@@ -55,7 +55,7 @@ export default function Nav() {
 
         {/* Full-Screen Mobile Menu */}
         {isOpen && (
-          <div className="fixed top-0 left-0 w-full h-full bg-white z-50 flex flex-col justify-center items-center">
+          <div className="fixed top-0 left-0 w-full h-full bg-white z-40 flex flex-col justify-center items-center">
             <button className="absolute top-5 right-5" onClick={toggleMenu}>
               <AiOutlineClose size={30} />
             </button>
@@ -84,13 +84,17 @@ export default function Nav() {
               >
                 CONTACT
               </Link>
+              {isLoggedIn ? (
+              <LogoutButton title="Log out" /> // Render the LogoutButton for logged-in users
+            ) : (
               <Link
                 className={mobileLinkClasses}
                 href="/login"
                 onClick={toggleMenu}
               >
-                LOGIN
+                Sign in
               </Link>
+            )}
             </nav>
           </div>
         )}
@@ -109,7 +113,7 @@ export default function Nav() {
             <Link className={`${linkClasses} cursor-pointer`} href="/projects">
               PROJECTS
             </Link>
-            <div className="absolute hidden group-hover:block bg-white shadow-lg mt-1">
+            <div className="absolute hidden group-hover:block bg-white shadow-lg mt-1 z-40">
               <Link
                 className="block px-4 py-2 text-gray-800 hover:bg-gray-100"
                 href="/projects/studio1"
@@ -128,13 +132,7 @@ export default function Nav() {
           <Link className={linkClasses} href="/contact">
             CONTACT
           </Link>
-          {!isLoggedIn ? (
-            <Link className={`${linkClasses}`} href="/login">
-              LOGIN
-            </Link>
-          ) : (
-            <LogoutButton />
-          )}
+          {!isLoggedIn ? <LogoutButton title="Sign in" /> : <LogoutButton title="Log out" />}
         </div>
       </div>
     </nav>

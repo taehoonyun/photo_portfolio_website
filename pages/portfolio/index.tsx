@@ -12,7 +12,7 @@ import NoCopyImage from "../../components/NoCopyImage/NoCopyImage";
 import photos from "../../public/photos.json";
 import DefaultLayout from "@/layouts/default";
 import UploadComponent from "@/components/upload/upload";
-
+import DeleteImageList from "@/components/deleteList/deleteList";
 const PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
 
 export default function Page() {
@@ -24,6 +24,8 @@ export default function Page() {
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [selectedPicture, setSelectedPicture] = useState("");
+  const [deletImg, setDeleteImg] = useState<boolean>(false);
+
   return (
     <DefaultLayout>
       <section>
@@ -75,14 +77,23 @@ export default function Page() {
         </div>
         <div className="flex w-full relative">
           {isLoggedIn && PRESET && (
-            <UploadComponent
-              className="absolute top-[-16px] right-4 z-10 bg-slate-300 p-2 rounded-md hover:bg-slate-400" // Position the upload button
-              signatureEndpoint="/api/siginCloudinary"
-              uploadPreset={PRESET}
-              options={{ folder: "Dev/Dev_Portfolio" }}
-              onUploadSuccess={handleUploadSuccess} // Pass callback here
-            />
+            <div className="flex absolute top-[-16px] right-5 z-10">
+              <UploadComponent
+                className="bg-slate-300 p-2 rounded-md hover:bg-slate-400" // Position the upload button
+                signatureEndpoint="/api/siginCloudinary"
+                uploadPreset={PRESET}
+                options={{ folder: "Dev/Dev_Portfolio" }}
+                onUploadSuccess={handleUploadSuccess} // Pass callback here
+              />
+              <button
+                className="bg-red-500 ml-1 p-2 rounded-md hover:bg-red-700 z-12 text-white"
+                onClick={() => setDeleteImg((prev) => !prev)}
+              >
+                {deletImg ? "Close" : "Delete"}
+              </button>
+            </div>
           )}
+          {deletImg && <DeleteImageList profilePic={profilePic} />}
           <div className="flex flex-col lg:mr-4 lg:ml-4 w-full sm:mr-0 sm:ml-0">
             {profilePic &&
               profilePic.map((pic, index) => {

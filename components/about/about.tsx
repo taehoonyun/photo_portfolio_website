@@ -7,12 +7,17 @@ import { ToastContainer, toast } from "react-toastify";
 import { CldImage } from "next-cloudinary";
 import "react-toastify/dist/ReactToastify.css";
 import { useProfile } from "@/lib/useProfile";
+import DeleteImageList from "../deleteList/deleteList";
+
 const PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
 
 export default function About() {
   const router = useRouter();
-  const { isLoggedIn, profilePic, handleUploadSuccess } = useProfile("Dev/Dev_Profile", 1);
-    
+  const { isLoggedIn, profilePic, handleUploadSuccess } = useProfile(
+    "Dev/Dev_Profile",
+    1
+  );
+  const [deletImg, setDeleteImg] = useState<boolean>(false);
   const preventCopy = useCallback((e: React.SyntheticEvent) => {
     e.preventDefault();
   }, []);
@@ -26,7 +31,7 @@ export default function About() {
       <AboutText />
       <div className="basis-1/2 flex justify-center mt-8 md:mt-0">
         <div className="relative w-full max-w-[650px] flex justify-center">
-          {profilePic && (
+          {profilePic[0] && (
             <CldImage
               className="cursor-pointer"
               crop={"fill"}
@@ -41,17 +46,27 @@ export default function About() {
             />
           )}
           {isLoggedIn && PRESET && (
-            <UploadComponent
-              className="absolute top-[-50px] right-0 z-10 bg-slate-300 p-2 rounded-md hover:bg-slate-400" // Position the upload button
-              signatureEndpoint="/api/siginCloudinary"
-              uploadPreset={PRESET}
-              options={{ folder: "Dev/Dev_Profile" }}
-              onUploadSuccess={handleUploadSuccess} // Pass callback here
-            />
+            <div className="flex absolute top-[-44px] right-0 z-10">
+              <UploadComponent
+                className="bg-slate-300 p-2 rounded-md hover:bg-slate-400" // Position the upload button
+                signatureEndpoint="/api/siginCloudinary"
+                uploadPreset={PRESET}
+                options={{ folder: "Dev/Dev_Profile" }}
+                onUploadSuccess={handleUploadSuccess} // Pass callback here
+              />
+              <button
+                className="bg-red-500 ml-1 p-2 rounded-md hover:bg-red-700 z-12 text-white"
+                onClick={() => setDeleteImg((prev) => !prev)}
+              >
+                {deletImg ? "Close" : "Delete"}
+              </button>
+            </div>
           )}
         </div>
+        <div className="relative">
+          {deletImg && <DeleteImageList profilePic={profilePic} />}
+        </div>
       </div>
-
       {/* Toast container to display notifications */}
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </div>

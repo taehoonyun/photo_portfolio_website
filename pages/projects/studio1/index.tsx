@@ -12,7 +12,7 @@ import NoCopyImage from "../../../components/NoCopyImage_Studio/NoCopyImageStudi
 import DefaultLayout from "@/layouts/default";
 import { useProfile } from "@/lib/useProfile";
 import UploadComponent from "@/components/upload/upload";
-
+import DeleteImageList from "@/components/deleteList/deleteList";
 const PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
 
 export default function Studio1() {
@@ -21,26 +21,38 @@ export default function Studio1() {
   const [click, setClick] = useState<boolean>(true);
   const timeoutRef = useRef<any>(null);
   const delay = 5000;
+  const [deletImg, setDeleteImg] = useState<boolean>(false);
   const { isLoggedIn, profilePic, handleUploadSuccess } = useProfile(
     "Dev/Dev_Studio1",
     10
   );
-  
+
   return (
     <DefaultLayout>
       <section>
         <div className={styles.trending}>
           <div className={styles.scontainer}>
             <div className="relative">
-            {isLoggedIn && PRESET && (
-            <UploadComponent
-              className="absolute top-0 right-0 z-10 bg-slate-300 p-2 rounded-md hover:bg-slate-400" // Position the upload button
-              signatureEndpoint="/api/siginCloudinary"
-              uploadPreset={PRESET}
-              options={{ folder: "Dev/Dev_Studio1" }}
-              onUploadSuccess={handleUploadSuccess} // Pass callback here
-            />
-          )}
+              {isLoggedIn && PRESET && (
+                <div className="flex absolute top-[-40px] right-5 z-10">
+                  <UploadComponent
+                    className="bg-slate-300 p-2 rounded-md hover:bg-slate-400" // Position the upload button
+                    signatureEndpoint="/api/siginCloudinary"
+                    uploadPreset={PRESET}
+                    options={{ folder: "Dev/Dev_Studio1" }}
+                    onUploadSuccess={handleUploadSuccess} // Pass callback here
+                  />
+                  <button
+                    className="bg-red-500 ml-1 p-2 rounded-md hover:bg-red-700 z-12 text-white"
+                    onClick={() => setDeleteImg((prev) => !prev)}
+                  >
+                    {deletImg ? "Close" : "Delete"}
+                  </button>
+                </div>
+              )}
+              <div className="relative">
+                {deletImg && <DeleteImageList profilePic={profilePic} />}
+              </div>
               <Swiper
                 autoplay={{
                   delay: 5000, // Delay between slides

@@ -1,9 +1,9 @@
 // pages/api/sign-cloudinary-params.ts
 import { NextApiRequest, NextApiResponse } from "next";
-import cloudinary from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 
 // Cloudinary configuration
-cloudinary.v2.config({
+cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME as string,
   api_key: process.env.CLOUDINARY_API_KEY as string,
   api_secret: process.env.CLOUDINARY_API_SECRET as string,
@@ -28,7 +28,7 @@ export default async function handler(
     }
 
     // Generate the signature
-    const signature = cloudinary.v2.utils.api_sign_request(paramsToSign, SECRET_KEY);
+    const signature = cloudinary.utils.api_sign_request(paramsToSign, SECRET_KEY);
 
     res.status(200).json({ signature });
   } catch (error) {

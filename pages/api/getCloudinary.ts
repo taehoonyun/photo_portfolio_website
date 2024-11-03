@@ -15,14 +15,7 @@ export default async function handler(
 ) {
   try {
     // Search for resources specifically in the 'profile' folder
-    console.log(
-      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-      process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
-      process.env.CLOUDINARY_API_SECRET
-    );
-
     const { folder, limit } = req.body;
- 
     const resources = await cloudinary.search
       .expression(`folder:${folder}`) // Search within the 'profile' folder
       .max_results(limit)
@@ -33,6 +26,6 @@ export default async function handler(
     res.status(200).json({ images: resources.resources });
   } catch (error) {
     console.error("Error fetching Cloudinary assets:", error);
-    // res.status(500).json({ error: "Error fetching images from Cloudinary" });
+    res.status(500).json({ error: "Error fetching images from Cloudinary" });
   }
 }
