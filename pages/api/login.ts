@@ -9,8 +9,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   const { email, password, anonymous } = req.body;
-  
-  
+
   // Owner credentials for login
   const owner = {
     id: 1,
@@ -18,7 +17,6 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     password: "password", // Should be hashed in real-world scenarios
     tokenExpiration: "1w", // 1 week token expiration for owner
   };
-  console.log(email === owner.email);
 
   if (!SECRET_KEY) {
     return res.status(500).json({ message: "Secret key is missing" });

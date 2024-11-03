@@ -15,18 +15,19 @@ export default async function handler(
 ) {
   try {
     // Search for resources specifically in the 'profile' folder
+    console.log(
+      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+      process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY,
+      process.env.CLOUDINARY_API_SECRET
+    );
+
     const { folder, limit } = req.body;
-    const resources1 = await cloudinary.search
-      .expression(`format:jpg`) // Search within the 'profile' folder
-      .sort_by("uploaded_at", "desc") // Sort by newest first
-      .execute(); // Execute the search
-      console.log(resources1);
+ 
     const resources = await cloudinary.search
       .expression(`folder:${folder}`) // Search within the 'profile' folder
       .max_results(limit)
       .sort_by("uploaded_at", "desc") // Sort by newest first
       .execute(); // Execute the search
-      
 
     // Respond with the resources
     res.status(200).json({ images: resources.resources });
