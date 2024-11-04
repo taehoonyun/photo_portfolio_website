@@ -84,3 +84,7 @@ You can test the login functionality using these example credentials:
 
 email: "test@example.com",
 password: "password",
+
+### Note 
+
+Please refresh the page if you can not see the upload and delete button.
