@@ -13,8 +13,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Owner credentials for login
   const owner = {
     id: 1,
-    email: "test@example.com",
-    password: "password", // Should be hashed in real-world scenarios
+      email: "test@example.com",
+      password: "password", // Should be hashed in real-world scenarios
     tokenExpiration: "1w", // 1 week token expiration for owner
   };
 

@@ -132,7 +132,7 @@ export default function Nav() {
           <Link className={linkClasses} href="/contact">
             CONTACT
           </Link>
-          {!isLoggedIn ? <LogoutButton title="Log out" /> : <LogoutButton title="Sign in" />}
+          {!isLoggedIn ? <LogoutButton title="Sign in" /> : <LogoutButton title="Log out" />}
         </div>
       </div>
     </nav>
