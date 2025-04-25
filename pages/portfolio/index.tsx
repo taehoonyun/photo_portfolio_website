@@ -17,7 +17,7 @@ const PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_PRESET_NAME;
 
 export default function Page() {
   // pages/index.js
-  const { isLoggedIn, profilePic, handleUploadSuccess } = useProfile(
+  const { isLoggedIn, profilePic, handleUploadSuccess, refreshImages } = useProfile(
     "Dev/Dev_Portfolio",
     50
   );
@@ -93,7 +93,13 @@ export default function Page() {
               </button>
             </div>
           )}
-          {deletImg && <DeleteImageList profilePic={profilePic} />}
+          {deletImg && (
+            <DeleteImageList 
+              profilePic={profilePic} 
+              onClose={() => setDeleteImg(false)}
+              onRefresh={refreshImages}
+            />
+          )}
           <div className="flex flex-col lg:mr-4 lg:ml-4 w-full sm:mr-0 sm:ml-0">
             {profilePic &&
               profilePic.map((pic, index) => {

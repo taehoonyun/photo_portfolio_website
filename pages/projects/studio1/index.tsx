@@ -22,7 +22,7 @@ export default function Studio1() {
   const timeoutRef = useRef<any>(null);
   const delay = 5000;
   const [deletImg, setDeleteImg] = useState<boolean>(false);
-  const { isLoggedIn, profilePic, handleUploadSuccess } = useProfile(
+  const { isLoggedIn, profilePic, handleUploadSuccess, refreshImages } = useProfile(
     "Dev/Dev_Studio1",
     10
   );
@@ -51,7 +51,13 @@ export default function Studio1() {
                 </div>
               )}
               <div className="relative">
-                {deletImg && <DeleteImageList profilePic={profilePic} />}
+                {deletImg && (
+                  <DeleteImageList 
+                    profilePic={profilePic} 
+                    onClose={() => setDeleteImg(false)}
+                    onRefresh={refreshImages} // Add refresh callback to update image list after deletion
+                  />
+                )}
               </div>
               <Swiper
                 autoplay={{
