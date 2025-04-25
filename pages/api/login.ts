@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
 import { serialize } from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 const SECRET_KEY = process.env.SECRET_KEY;
@@ -26,7 +26,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
     // Generate a token for an anonymous user
     const anonymousToken = jwt.sign(
       { anonymous: true }, // Payload for anonymous user
-      SECRET_KEY,
+      SECRET_KEY as string,
       { expiresIn: "5h" }, // Short expiration for anonymous session
     );
 
@@ -48,9 +48,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   // Check owner credentials for login
   if (email === owner.email && password === owner.password) {
     // Generate JWT token for the owner
-    const token = jwt.sign({ id: owner.id, email: owner.email }, SECRET_KEY, {
-      expiresIn: owner.tokenExpiration,
-    });
+    const token = jwt.sign(
+      { id: owner.id, email: owner.email }, 
+      SECRET_KEY as Secret, 
+      { expiresIn: owner.tokenExpiration }
+    );
 
     // Set the token in a cookie
     res.setHeader(
