@@ -27,8 +27,8 @@ export default async function handler(
     // Split URL by slash
     const urlParts = url.split('/');
     
-    // Find the position of the 'upload' keyword
-    const uploadIndex = urlParts.findIndex(part => part === 'upload');
+    // Find the position of the 'upload' keyword in URL parts
+    const uploadIndex = urlParts.findIndex((part: string) => part === 'upload');
     if (uploadIndex === -1) {
       return res.status(400).json({ error: "Invalid URL format - 'upload' not found" });
     }

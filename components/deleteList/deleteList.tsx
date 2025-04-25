@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { deleteImage } from "../deletePicture/deleteImage";
 import { motion, AnimatePresence } from "framer-motion";
-import { IoClose, IoTrashOutline } from "react-icons/io5";
 import { toast } from "react-toastify";
+import { XMarkIcon,TrashIcon } from "@heroicons/react/24/outline";
+
 
 interface DeleteImageListProps {
   profilePic: string[];
@@ -66,7 +67,7 @@ const DeleteImageList: React.FC<DeleteImageListProps> = ({
             className="text-gray-400 hover:text-gray-600 transition-colors"
             aria-label="Close"
           >
-            <IoClose className="h-5 w-5" />
+            <XMarkIcon className="h-5 w-5" />
           </button>
         )}
       </div>
@@ -107,7 +108,7 @@ const DeleteImageList: React.FC<DeleteImageListProps> = ({
                       {deletingImage === image ? (
                         <div className="h-4 w-4 animate-spin rounded-full border-2 border-red-600 border-t-transparent" />
                       ) : (
-                        <IoTrashOutline className="h-4 w-4" />
+                        <TrashIcon className="h-4 w-4" />
                       )}
                     </button>
                     <button
@@ -116,7 +117,7 @@ const DeleteImageList: React.FC<DeleteImageListProps> = ({
                       disabled={deletingImage === image}
                       aria-label="Cancel"
                     >
-                      <IoClose className="h-4 w-4" />
+                      <XMarkIcon className="h-4 w-4" />
                     </button>
                   </div>
                 ) : (
@@ -125,7 +126,7 @@ const DeleteImageList: React.FC<DeleteImageListProps> = ({
                     className="p-1.5 rounded-full bg-red-50 text-red-400 opacity-0 group-hover:opacity-100 hover:bg-red-100 hover:text-red-600 transition-all"
                     aria-label="Delete image"
                   >
-                    <IoTrashOutline className="h-4 w-4" />
+                    <TrashIcon className="h-4 w-4" />
                   </button>
                 )}
               </motion.li>

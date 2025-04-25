@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { Bars3Icon, XMarkIcon  } from '@heroicons/react/24/outline';
 
 import photos from "../../public/photos.json";
 import LogoutButton from "../logout/LogoutButton";
@@ -45,11 +45,7 @@ export default function Nav() {
         {/* Hamburger Menu (visible on small screens) */}
         <div className="md:hidden">
           <button aria-label="Toggle Menu" onClick={toggleMenu}>
-            {isOpen ? (
-              <AiOutlineClose size={30} />
-            ) : (
-              <AiOutlineMenu size={30} />
-            )}
+            {isOpen ? <XMarkIcon className="h-8 w-8" /> : <Bars3Icon className="h-8 w-8" />}
           </button>
         </div>
 
@@ -57,7 +53,7 @@ export default function Nav() {
         {isOpen && (
           <div className="fixed top-0 left-0 w-full h-full bg-white z-40 flex flex-col justify-center items-center">
             <button className="absolute top-5 right-5" onClick={toggleMenu}>
-              <AiOutlineClose size={30} />
+              <XMarkIcon className="h-8 w-8" />
             </button>
             <nav className="flex flex-col items-center space-y-8">
               <Link className={mobileLinkClasses} href="/" onClick={toggleMenu}>
