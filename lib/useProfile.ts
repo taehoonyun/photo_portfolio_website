@@ -2,13 +2,14 @@
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "react-toastify";
 import { fetchImagesFromFolder } from "@/components/getPicture/getPicture";
+import Cookies from 'js-cookie';
 
 export const useProfile = (folderPath: string, limit: number = 10) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profilePic, setProfilePic] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // 이미지 목록을 로드하는 함수
+  // Function to load image list
   const loadProfilePicture = useCallback(async () => {
     setIsLoading(true);
     try {
@@ -21,7 +22,7 @@ export const useProfile = (folderPath: string, limit: number = 10) => {
     } catch (error) {
       console.error("Error loading profile picture:", error);
       if (typeof window !== "undefined") {
-        toast.error("이미지를 불러오는데 실패했습니다.");
+        toast.error("Failed to load images");
       }
     } finally {
       setIsLoading(false);
@@ -29,12 +30,18 @@ export const useProfile = (folderPath: string, limit: number = 10) => {
   }, [folderPath, limit]);
 
   useEffect(() => {
-    // 로그인 상태 확인
+    // Check cookies instead of localStorage
     if (typeof window !== "undefined") {
-      setIsLoggedIn(!!localStorage.getItem("user"));
+      // Check both token types (regular and anonymous)
+      const hasToken = Cookies.get('token') !== undefined;
+      const hasAnonToken = Cookies.get('token_anony') !== undefined;
+      
+      setIsLoggedIn(hasToken || hasAnonToken);
+      
+      // Debug console logs
+      console.log("Auth check - Token:", hasToken, "Anonymous:", hasAnonToken);
     }
     
-    // 이미지 로드
     loadProfilePicture();
   }, [loadProfilePicture]);
 

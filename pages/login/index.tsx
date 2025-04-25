@@ -22,12 +22,17 @@ export default function LoginPage() {
       });
 
       if (response.ok) {
-        // If login is successful, redirect to the homepage or dashboard
-        router.push("/");
+        // If login is successful, set localStorage and redirect
+        localStorage.setItem("user", "user");
+        
+        // Add a short delay before redirecting (allows time for localStorage to be set)
+        setTimeout(() => {
+          // Redirect with reload to ensure state is properly updated
+          window.location.href = "/"; // Use window.location instead of router.push to force page reload
+        }, 100);
       } else {
         // If login fails, show an error message
         const data = await response.json();
-
         setErrorMessage(data.message || "Failed to login");
       }
     } catch (error) {

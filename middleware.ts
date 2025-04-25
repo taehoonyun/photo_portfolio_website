@@ -1,27 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-export function middleware(req: NextRequest) {
-  // Check if the token exists in the cookies
 
-  const token = req.cookies.get("token")?.value; // Safely access the token from cookies
-  const token_anony = req.cookies.get("token_anony")?.value; // Safely access the token from cookies
-  // console.log("token",token,"anoy",token_anony);
-
-  // Get the current URL path
-  const { pathname } = req.nextUrl;
-  const response = NextResponse.next();
-
-  // If there's no token and the user is trying to access a protected route, redirect to login
-  if (!token && !token_anony && pathname !== "/login") {
-    return NextResponse.redirect(new URL("/login", req.url)); // Redirect to login
+export function middleware(request: NextRequest) {
+  const token = request.cookies.get("token")?.value;
+  const anonymousToken = request.cookies.get("token_anony")?.value;
+  
+  // List of protected routes
+  const protectedPaths = ['/protected', '/admin'];
+  
+  // Check if current path is protected
+  const isProtectedPath = protectedPaths.some(path => 
+    request.nextUrl.pathname.startsWith(path)
+  );
+  
+  // Redirect to login if accessing protected route without token
+  if (isProtectedPath && !token) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
-  // Set a custom cookie in the response
-  if (token) {
-    response.cookies.set("token_name", "token", { path: "/" });
-  } else {
-    response.cookies.set("token_name", "token_anony", { path: "/" });
-  }
-  // If there's a token or the user is already on the login page, allow the request
-  return response; // Proceed to the next middleware or route
+  
+  return NextResponse.next();
 }
 
 // Define the routes that need to be protected
